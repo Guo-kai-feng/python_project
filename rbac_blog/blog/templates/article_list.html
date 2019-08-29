@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+<h1>
+    文章
+</h1>
+{% endblock title %}
+
+
+{% block content %}
+{% load mytags %}
+
+
+{% if 'blog:add_article'|url_filter:request %}
+<a href="{% url 'blog:add_article' %}" class="btn btn-primary btn-sm">添加</a>
+{% endif %}
+<hr style="margin-top:5px;margin-bottom: 5px;border-top: 1px solid #e8e8e8;"/>
+<table class="table table-bordered table-striped table-hover cc">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>文章标题</th>
+        <th>文章分类</th>
+        <th>所属Blog</th>
+        <th>文章内容</th>
+
+
+        {% if 'blog:edit_article'|url_filter:request %}
+        <th>编辑</th>
+        {% endif %}
+        {% if 'blog:edit_article'|url_filter:request %}
+        <th>删除</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for obj in article_obj %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ obj.title }}</td>
+        <td>{{ obj.get_category_display }}</td>
+        <td>{{ obj.blog }}</td>
+        <td>{{ obj.content|truncatechars:9 }}</td>
+        {% if 'blog:edit_article'|url_filter:request %}
+        <td><a href="{% url 'blog:edit_article' obj.pk %}"><i class="fa fa-edit">编辑</i></a></td>
+        {% endif %}
+        {% if 'blog:edit_article'|url_filter:request %}
+        <td><a href="{% url 'blog:del_article' obj.pk %}"><i class="fa fa-trash-o" style="color: red"
+                                                             aria-hidden="true">删除</i></a></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endblock %}

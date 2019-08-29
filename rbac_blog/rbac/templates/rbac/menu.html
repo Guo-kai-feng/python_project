@@ -1,0 +1,20 @@
+<div class="multi-menu">
+
+    {% for menu_k,menu_v in order_dict.items %}
+    <div class="item">
+        <div class="title">{{ menu_v.title }}</div>
+        <div class="body {{ menu_v.class }}">
+            {% for ermenu in menu_v.children %}
+            <a href="{{ ermenu.url }}" class="{{ ermenu.class }}">{{ ermenu.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
